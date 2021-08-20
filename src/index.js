@@ -1,7 +1,11 @@
 import './sass/main.scss';
 import fetchCountries from './fetchCountries';
+import debounce from 'lodash.debounce';
+import fullCountry from '../fullCountry.hbs';
+import onlyName from '../onlyName.hbs';
+import errors from '../error.js'
+
 const refs = {
-    button: document.querySelector('#button'),
     input: document.querySelector('#search'),
     container: document.querySelector('.container'),
 };
@@ -17,36 +21,28 @@ const refs = {
 // };
 
 const handlerSubmit = (e) => {
-    e.preventDefault()
+
     fetchCountries(refs.input.value)
-    .then(data => renderColection(data))
-    .catch(err => console.log(err))
-}
-function createItem({capital, population, languages, name, flag}) {
-    // const article =  `
-    //     <article>
-    //         <img src='${strDrinkThumb}' alt='${strDrink}' />
-    //         <p>${strDrink}</p>
-    //     </article>
-    // `
-        const article =    `<p>
-   Capital: ${capital}
-    </p>
-    <p>
-    Population: ${population}
-    </p>
-    <p>
-   Languages: ${languages[0]}
-    </p>
-   <p>${name}<p>
+        .then(data => createItem(data))
+        .catch(err => console.log(err))
+    
+};
 
-    </div>
-    <img src="${flag}" alt="Флаг ${name}" width="480" class="country-flag"></img>`
-    refs.container.insertAdjacentHTML('beforeend', article)
+
+function createItem(countries) {
+    if (countries.length === 1) {
+        const markup = fullCountry(countries);
+        refs.container.innerHTML = markup;
+        refs.input.value = '';
+    } else if  (countries.length >= 2 && countries.length <= 10) {
+        const markup = onlyName(countries);
+        refs.container.innerHTML = markup;
+        refs.input.value = '';
+    } else {
+        errors.errorOnCountry();
+        refs.container.innerHTML = "";
+    };
+    
 }
 
-function renderColection(arr) {
-     arr.forEach(el => createItem(el));
-}
-
-refs.button.addEventListener('click', handlerSubmit)
+refs.input.addEventListener('input', debounce(handlerSubmit, 500));
