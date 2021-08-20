@@ -1,9 +1,17 @@
+body {
+  background-color: rgb(216, 215, 215);
+}
 #input {
   display: block;
   margin: 0 auto;
   height: 24px;
   min-width: 300px;
   margin-top: 15px;
+  border-radius: 5px;
+  background-color: rgb(216, 215, 215);
+}
+::placeholder {
+  color: rgb(182, 70, 70);
 }
 
 ul {
