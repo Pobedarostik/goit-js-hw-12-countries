@@ -6,7 +6,7 @@ import onlyName from '../onlyName.hbs';
 import errors from '../error.js'
 
 const refs = {
-    input: document.querySelector('#search'),
+    input: document.querySelector('#input'),
     container: document.querySelector('.container'),
 };
 
