@@ -11,16 +11,7 @@ const refs = {
 };
 
 
-// const handlerSubmit = (e) => {
-//     e.preventDefault()
-//     const value = refs.input.value
-//     fetch(`https://restcountries.eu/rest/v2/name/${value}`)
-//         .then(response => response.json())
-//         .then(data => renderColection(data))
-//         .catch(err => console.log(err))
-// };
-
-const handlerSubmit = (e) => {
+const autoSubmit = (e) => {
 
     fetchCountries(refs.input.value)
         .then(data => createItem(data))
@@ -37,7 +28,6 @@ function createItem(countries) {
     } else if  (countries.length >= 2 && countries.length <= 10) {
         const markup = onlyName(countries);
         refs.container.innerHTML = markup;
-        refs.input.value = '';
     } else {
         errors.errorOnCountry();
         refs.container.innerHTML = "";
@@ -45,4 +35,4 @@ function createItem(countries) {
     
 }
 
-refs.input.addEventListener('input', debounce(handlerSubmit, 500));
+refs.input.addEventListener('input', debounce(autoSubmit, 500));

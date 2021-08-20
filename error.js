@@ -4,12 +4,14 @@ import '@pnotify/core/dist/BrightTheme.css';
 export default {
   errorOnCountry() {
     error({
-      text: 'Too many matches found! Please enter a more spesific query!'
+      text: 'Too many matches found! Please enter a more spesific query!',
+      delay: 2000,
     });
   },
   errorOnPromise(err) {
     error({
-      text: err
+      text: err,
+      delay: 2000,
     });
   },
 };
